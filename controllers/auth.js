@@ -55,6 +55,36 @@ exports.forgot2 = (req, res) => {
 	});
 };
 
+exports.signupAdmin = (req, res) => {
+	const credentials = ({ username, email, password } = req.body);
+	const questions = ({ question_1, question_2, question_3 } = req.body);
+	const answers = ({ answer_1, answer_2, answer_3 } = req.body);
+
+	const user = new User({
+		...credentials,
+		role: 1,
+		questions: {
+			q1: { question: question_1, answer: answer_1 },
+			q2: { question: question_2, answer: answer_2 },
+			q3: { question: question_3, answer: answer_3 },
+		},
+	});
+
+	user.save((err, user) => {
+		if (err) {
+			return res.status(400).json({
+				error: err.message,
+			});
+		}
+
+		user.salt = undefined;
+		user.hashed_password = undefined;
+		res.json({
+			user,
+		});
+	});
+};
+
 exports.signup = (req, res) => {
 	const credentials = ({ username, email, password } = req.body);
 	const questions = ({ question_1, question_2, question_3 } = req.body);
