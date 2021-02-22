@@ -4,19 +4,53 @@ const expressJwt = require("express-jwt");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 
 exports.forgot1 = (req, res) => {
-	const { email } = req.body;
+	const { email, userId } = req.body;
 
-	User.findOne(email, (err, user) => {
-		if (err || !user) {
+	if (email) {
+		User.findOne(email, (err, user) => {
+			if (err || !user) {
+				return res.status(200).json({
+					error: true,
+					message: "User with that email does not exist",
+				});
+			}
+
 			return res.status(200).json({
-				error: true,
-				message: "User with that email does not exist",
+				error: false,
+				message: "success",
+				userId: user._id,
+				questions: user.questions,
 			});
-		}
+		});
+	} else if (userId) {
+		User.findById(userId, (err, user) => {
+			if (err || !user) {
+				return res.status(200).json({
+					error: true,
+					message: "User with that ID does not exist",
+				});
+			}
+
+			return res.status(200).json({
+				error: false,
+				message: "success",
+			});
+		});
+	}
+};
+
+exports.forgot2 = (req, res) => {
+	const { userId, newPassword } = req.body;
+
+	User.findById(userId, function (err, user) {
+		if (err) return false;
+
+		user.password = newPassword;
+		user.save();
 
 		return res.status(200).json({
 			error: false,
-			message: "success",
+			message: "Your password has been changed successfully",
 		});
 	});
 };

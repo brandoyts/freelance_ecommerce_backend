@@ -5,6 +5,7 @@ const {
 	signup,
 	signin,
 	forgot1, // STEP 1
+	forgot2, // STEP 2
 	signout,
 	requireSignin,
 } = require("../controllers/auth");
@@ -12,6 +13,7 @@ const {
 router.post("/signup", signup);
 router.post("/signin", signin);
 router.post("/forgot1", forgot1); // STEP 1
+router.post("/forgot2", forgot2); // STEP 2
 router.get("/signout", signout);
 
 router.get("/hello", requireSignin, (req, res) => {

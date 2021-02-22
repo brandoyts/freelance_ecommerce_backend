@@ -8,8 +8,12 @@ const {
 	deleteFeedback,
 	createFeedback,
 	getPublishedFeedback,
+	updateById,
+	userUpdateById,
 } = require("../controllers/feedback");
 
+router.patch("/admin/adminFeedback/:id", updateById);
+router.patch("/user/userFeedback/:id", userUpdateById);
 router.get("/publishedFeedback", getPublishedFeedback);
 router.get("/pendingFeedback", pendingFeedback);
 router.post("/createFeedback", createFeedback);
