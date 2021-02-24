@@ -11,6 +11,7 @@ const productRoutes = require("./routes/product");
 const orderRoutes = require("./routes/order");
 const feedbackRoutes = require("./routes/feedback");
 const faqRoutes = require("./routes/faq");
+const backgroundImageRoutes = require("./routes/backgroundImage");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -26,6 +27,7 @@ app.use("/api", productRoutes);
 app.use("/api", orderRoutes);
 app.use("/api", feedbackRoutes);
 app.use("/api/", faqRoutes);
+app.use("/api", backgroundImageRoutes);
 
 const port = process.env.PORT || 8000;
 
